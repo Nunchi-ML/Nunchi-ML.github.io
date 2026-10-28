@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>html,body{margin:0}</style>
+</head>
+<body>
+<title>Nunchi-ML 프로젝트 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 레이아웃: 하늘→민트 머리 띠 · 역할 필터 → 9일 일정(단계마다 쓰는 문서) → 문서 8장 카드 → 역할표 · 협업 방식 2단 */
+:root {
+  --bg: #F3F8FF;
+  --surface: #FFFFFF;
+  --soft: #F6F9FE;
+  --line: #E2EAF5;
+  --ink: #1B2440;
+  --sub: #5F6C88;
+  --sky: #2F80ED;
+  --mint: #10B9A6;
+  --hero-a: #3B8BF5;
+  --hero-b: #19C3AE;
+  --hero-ink: #FFFFFF;
+  --star: #E8590C;
+  --shadow: 0 1px 2px rgba(31, 64, 120, .06), 0 6px 18px rgba(31, 64, 120, .06);
+  --pm: #6C5CE7;  --pm-bg: #EFEDFF;
+  --fe: #E8457A;  --fe-bg: #FFE9F0;
+  --be: #F0613F;  --be-bg: #FFECE6;
+  --da: #2F80ED;  --da-bg: #E6F0FF;
+  --db: #C98A00;  --db-bg: #FFF4D6;
+  --aa: #0FA37F;  --aa-bg: #DEF7EE;
+  --ab: #F2780C;  --ab-bg: #FFEEDC;
+  --all: #4B5A75; --all-bg: #ECF0F6;
+  --font: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1526; --surface: #142038; --soft: #18253F; --line: #26355A; --ink: #E8EEFA; --sub: #A0AECB;
+    --sky: #6AA8FF; --mint: #3EDDC8; --hero-a: #2463C9; --hero-b: #0F9A8A; --hero-ink: #FFFFFF; --star: #FFA65C;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
+    --pm: #A99CFF; --pm-bg: #29234F; --fe: #FF86AE; --fe-bg: #43203A; --be: #FF8F73; --be-bg: #45231C;
+    --da: #6AA8FF; --da-bg: #182C52; --db: #FFCE4D; --db-bg: #3A2F10; --aa: #4FE0B4; --aa-bg: #133A31;
+    --ab: #FFA65C; --ab-bg: #42291A; --all: #AAB6CC; --all-bg: #233150;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1526; --surface: #142038; --soft: #18253F; --line: #26355A; --ink: #E8EEFA; --sub: #A0AECB;
+  --sky: #6AA8FF; --mint: #3EDDC8; --hero-a: #2463C9; --hero-b: #0F9A8A; --hero-ink: #FFFFFF; --star: #FFA65C;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
+  --pm: #A99CFF; --pm-bg: #29234F; --fe: #FF86AE; --fe-bg: #43203A; --be: #FF8F73; --be-bg: #45231C;
+  --da: #6AA8FF; --da-bg: #182C52; --db: #FFCE4D; --db-bg: #3A2F10; --aa: #4FE0B4; --aa-bg: #133A31;
+  --ab: #FFA65C; --ab-bg: #42291A; --all: #AAB6CC; --all-bg: #233150;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 56px;
+}
+.wrap { max-width: 1320px; margin: 0 auto; display: grid; gap: 30px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--sky); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--mint); outline-offset: 2px; border-radius: 8px; }
+.mono { font-family: var(--mono); font-size: .86em; }
+
+/* 머리 띠 */
+header {
+  background: linear-gradient(115deg, var(--hero-a), var(--hero-b));
+  color: var(--hero-ink); border-radius: 22px; padding: 26px 28px;
+  display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: center; justify-content: space-between;
+  box-shadow: var(--shadow); position: relative; overflow: hidden;
+}
+header::after {
+  content: ""; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%;
+  background: rgba(255, 255, 255, .12); pointer-events: none;
+}
+.brand { display: flex; gap: 16px; align-items: center; min-width: 0; position: relative; z-index: 1; }
+.brand svg { flex: none; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .15)); }
+.brand h1 { font-size: clamp(22px, 3vw, 31px); font-weight: 700; letter-spacing: -.01em; }
+.brand p { color: rgba(255, 255, 255, .88); font-size: 14px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
+.links a {
+  text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 15px; border-radius: 999px;
+  background: rgba(255, 255, 255, .2); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, .35);
+}
+.links a:hover { background: rgba(255, 255, 255, .32); }
+
+/* 역할 필터 */
+.filter { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filter span { color: var(--sub); font-size: 13px; font-weight: 600; margin-right: 4px; }
+.filter button {
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; padding: 7px 15px; border-radius: 999px;
+  border: 1.5px solid transparent; background: var(--cb, var(--surface)); color: var(--c, var(--ink));
+}
+.filter button[aria-pressed="true"] { background: var(--c, var(--ink)); color: #FFFFFF; box-shadow: var(--shadow); }
+.filter button[data-role="all"] { --c: var(--ink); --cb: var(--surface); border-color: var(--line); }
+.filter button[data-role="all"][aria-pressed="true"] { color: var(--surface); }
+
+/* 공통 칩 */
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 600; line-height: 1; padding: 5px 9px; border-radius: 999px; background: var(--cb); color: var(--c); white-space: nowrap; }
+[data-r="pm"] { --c: var(--pm); --cb: var(--pm-bg); }
+[data-r="fe"] { --c: var(--fe); --cb: var(--fe-bg); }
+[data-r="be"] { --c: var(--be); --cb: var(--be-bg); }
+[data-r="da"] { --c: var(--da); --cb: var(--da-bg); }
+[data-r="db"] { --c: var(--db); --cb: var(--db-bg); }
+[data-r="aa"] { --c: var(--aa); --cb: var(--aa-bg); }
+[data-r="ab"] { --c: var(--ab); --cb: var(--ab-bg); }
+[data-r="all"] { --c: var(--all); --cb: var(--all-bg); }
+
+section > h2 { font-size: 20px; font-weight: 700; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 14px; }
+section > h2 small { font-size: 13px; font-weight: 500; color: var(--sub); }
+
+/* 9일 일정 */
+.tl-scroll { overflow-x: auto; padding-bottom: 6px; }
+.tl { display: grid; grid-template-columns: repeat(9, minmax(118px, 1fr)); gap: 8px; min-width: 1100px; }
+.day { background: var(--surface); border-radius: 12px; padding: 8px 10px; text-align: center; box-shadow: var(--shadow); }
+.day b { display: block; font-size: 14px; }
+.day small { color: var(--sub); font-size: 12px; font-variant-numeric: tabular-nums; }
+.day.wk { position: relative; }
+.day.wk::before { content: "주말"; position: absolute; left: -4px; top: -9px; font-size: 10.5px; font-weight: 600; color: var(--sub); background: var(--bg); padding: 0 4px; border-radius: 4px; }
+.stage { background: var(--scb); border-radius: 16px; padding: 14px; display: grid; gap: 8px; align-content: start; border: 1.5px solid color-mix(in srgb, var(--sc) 25%, transparent); }
+.stage h3 { font-size: 15.5px; font-weight: 700; color: var(--sc); }
+.stage .out { font-size: 13px; color: var(--ink); opacity: .82; }
+.stage .docs { display: flex; flex-wrap: wrap; gap: 5px; }
+.stage .docs .chip { white-space: normal; line-height: 1.25; background: var(--surface); }
+.stage .ms { font-size: 12.5px; font-weight: 700; color: var(--star); background: var(--surface); border-radius: 999px; padding: 4px 10px; justify-self: start; }
+.s1 { --sc: var(--pm); --scb: var(--pm-bg); }
+.s2 { --sc: var(--be); --scb: var(--be-bg); }
+.s3 { --sc: var(--da); --scb: var(--da-bg); }
+.s4 { --sc: var(--aa); --scb: var(--aa-bg); }
+.s5 { --sc: var(--ab); --scb: var(--ab-bg); }
+.track { grid-column: 2 / 9; background: var(--surface); border: 1.5px dashed var(--mint); border-radius: 14px; padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: 13.5px; }
+.track b { color: var(--mint); }
+.track .step { color: var(--sub); }
+.track .step::after { content: "→"; margin-left: 14px; color: var(--mint); }
+.track .step:last-child::after { content: none; }
+
+/* 문서 카드 */
+.docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 14px; }
+.doc { background: var(--surface); border-radius: 18px; padding: 16px 16px 14px; display: grid; gap: 10px; align-content: start; min-width: 0; box-shadow: var(--shadow); border-top: 5px solid var(--c, var(--line)); }
+.doc-top { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.doc h3 { font-size: 17px; font-weight: 700; }
+.doc .when { font-size: 12px; font-weight: 600; color: var(--c); background: var(--cb); border-radius: 999px; padding: 3px 9px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.doc .one { color: var(--sub); font-size: 14px; }
+.doc .one b { color: var(--ink); }
+.doc .who { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.doc .who em { font-style: normal; font-size: 12px; color: var(--sub); margin-left: 2px; }
+.doc ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 14px; }
+.doc ul li::marker { color: var(--c); }
+.doc .to { font-size: 12.5px; color: var(--sub); background: var(--soft); border-radius: 10px; padding: 8px 10px; }
+.doc.opt { border-top-style: dashed; }
+.doc .tag { font-size: 11.5px; font-weight: 600; color: var(--sub); background: var(--soft); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+
+/* 아래 2단 */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 22px; align-items: start; }
+.panel { background: var(--surface); border-radius: 18px; padding: 16px; box-shadow: var(--shadow); }
+.roles { width: 100%; border-collapse: collapse; font-size: 14px; }
+.roles th { text-align: left; font-size: 12px; color: var(--sub); font-weight: 600; padding: 0 8px 8px; border-bottom: 1px solid var(--line); }
+.roles td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.roles tr:last-child td { border-bottom: 0; }
+.roles td:first-child { white-space: nowrap; }
+.roles .name { display: block; font-size: 12px; color: var(--sub); margin-top: 4px; }
+
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 0 0 8px; }
+.flow li { list-style: none; background: var(--soft); border-radius: 14px; padding: 10px; display: grid; gap: 3px; }
+.flow .n { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #FFFFFF; display: grid; place-items: center; font-size: 13px; font-weight: 700; }
+.flow b { font-size: 14px; }
+.flow small { font-size: 12px; color: var(--sub); }
+.loop { font-size: 12.5px; color: var(--sub); margin-bottom: 14px; }
+.rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+.rules div { border-radius: 12px; padding: 10px 12px; font-size: 13.5px; background: var(--cb); }
+.rules b { display: block; font-size: 13px; color: var(--c); }
+.tpl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.tpl figure { margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.tpl figcaption { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 10px; background: var(--soft); font-size: 12.5px; font-weight: 600; color: var(--sub); }
+.tpl button { font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; border: 0; background: var(--sky); color: #FFFFFF; border-radius: 6px; padding: 4px 10px; }
+.tpl pre { margin: 0; padding: 10px; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; white-space: pre-wrap; word-break: keep-all; }
+.tools { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--sub); margin-top: 12px; }
+.tools b { color: var(--ink); }
+
+footer { color: var(--sub); font-size: 13px; text-align: center; }
+
+/* 역할 필터가 켜졌을 때 */
+body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
+[data-roles] { transition: opacity .2s, filter .2s; }
+@media (prefers-reduced-motion: reduce) { [data-roles] { transition: none; } }
+
+@media (max-width: 980px) {
+  .two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  header { padding: 20px; }
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .rules, .tpl { grid-template-columns: minmax(0, 1fr); }
+  .roles td:first-child { white-space: normal; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg width="56" height="56" viewBox="0 0 64 64" role="img" aria-label="Nunchi-ML 로고">
+        <rect width="64" height="64" rx="16" fill="#1E3A8A"/>
+        <path d="M7 32 Q32 9 57 32 Q32 55 7 32 Z" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="32" cy="32" r="11" fill="#14B8A6"/>
+        <rect x="25.5" y="33" width="3.4" height="4" rx="1" fill="#FFFFFF"/>
+        <rect x="30.3" y="30" width="3.4" height="7" rx="1" fill="#FFFFFF"/>
+        <rect x="35.1" y="26.5" width="3.4" height="10.5" rx="1" fill="#FFFFFF"/>
+      </svg>
+      <div>
+        <h1>Nunchi-ML 프로젝트 지도</h1>
+        <p>10/29(목) ~ 11/10(화) · 평일 9일 · 5명 · 누가 언제 어떤 문서를 쓰고, 어떻게 같이 일하는지 한 장으로</p>
+      </div>
+    </div>
+    <nav class="links" aria-label="바로가기">
+      <a href="https://app.notion.com/p/df8fb1d2f0db45dbab41cdd49edb5358" target="_blank" rel="noopener">노션 · 팀원 안내</a>
+      <a href="https://app.notion.com/p/40554fa7e143815680c0cfb0ff414d78" target="_blank" rel="noopener">노션 · 프로젝트 홈</a>
+      <a href="https://github.com/Nunchi-ML" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="filter" role="group" aria-label="역할 골라 보기">
+    <span>👀 내 역할만 보기</span>
+    <button type="button" id="f-all" data-role="all" aria-pressed="true">전체</button>
+    <button type="button" id="f-pm" data-role="pm" data-r="pm" aria-pressed="false">PM</button>
+    <button type="button" id="f-fe" data-role="fe" data-r="fe" aria-pressed="false">FE</button>
+    <button type="button" id="f-be" data-role="be" data-r="be" aria-pressed="false">BE</button>
+    <button type="button" id="f-da" data-role="da" data-r="da" aria-pressed="false">데이터 A</button>
+    <button type="button" id="f-db" data-role="db" data-r="db" aria-pressed="false">데이터 B</button>
+    <button type="button" id="f-aa" data-role="aa" data-r="aa" aria-pressed="false">AI A</button>
+    <button type="button" id="f-ab" data-role="ab" data-r="ab" aria-pressed="false">AI B</button>
+  </div>
+
+  <!-- 1. 9일 일정 -->
+  <section aria-labelledby="h-tl">
+    <h2 id="h-tl">🗓️ 9일 동안 이렇게 가요 <small>단계마다 쓰는 문서와 끝나면 나오는 것 · 날짜는 가안</small></h2>
+    <div class="tl-scroll">
+      <div class="tl">
+        <div class="day"><b>1일차</b><small>10/29 목</small></div>
+        <div class="day"><b>2일차</b><small>10/30 금</small></div>
+        <div class="day wk"><b>3일차</b><small>11/2 월</small></div>
+        <div class="day"><b>4일차</b><small>11/3 화</small></div>
+        <div class="day"><b>5일차</b><small>11/4 수</small></div>
+        <div class="day"><b>6일차</b><small>11/5 목</small></div>
+        <div class="day"><b>7일차</b><small>11/6 금</small></div>
+        <div class="day wk"><b>8일차</b><small>11/9 월</small></div>
+        <div class="day"><b>9일차</b><small>11/10 화</small></div>
+
+        <div class="stage s1">
+          <h3>① 주제 정하기</h3>
+          <p class="out">무엇을 예측할지 한 문장 · 역할 확정</p>
+          <div class="docs">
+            <span class="chip" data-r="pm" data-roles="pm">수행 계획</span>
+            <span class="chip" data-r="all" data-roles="pm fe be da db aa ab">역할 정하기 (전원)</span>
+          </div>
+        </div>
+        <div class="stage s2">
+          <h3>② 기준 정하기</h3>
+          <p class="out">점수 매기는 법 · 기능 · 주고받는 형식</p>
+          <div class="docs">
+            <span class="chip" data-r="db" data-roles="db">분석계획서</span>
+            <span class="chip" data-r="pm" data-roles="pm">분석계획서 · 검증 기준</span>
+            <span class="chip" data-r="aa" data-roles="aa ab">모델링 계획서</span>
+            <span class="chip" data-r="fe" data-roles="fe be">웹사이트 명세</span>
+          </div>
+        </div>
+        <div class="stage s3" style="grid-column: span 2">
+          <h3>③ 데이터 준비 · 분석</h3>
+          <p class="out">깨끗한 데이터 v1 · 그래프로 특징 찾기</p>
+          <div class="docs">
+            <span class="chip" data-r="da" data-roles="da db">데이터 명세서</span>
+            <span class="chip" data-r="da" data-roles="da">보고서 2장</span>
+            <span class="chip" data-r="db" data-roles="db">보고서 3장 · EDA</span>
+            <span class="chip" data-r="aa" data-roles="aa">베이스라인 모델</span>
+          </div>
+          <p class="ms">★ 4일차 끝: 첫 점수(베이스라인)</p>
+        </div>
+        <div class="stage s4" style="grid-column: span 3">
+          <h3>④ 모델 만들기</h3>
+          <p class="out">여러 모델을 같은 기준으로 비교 → 가장 좋은 모델을 파일로 저장</p>
+          <div class="docs">
+            <span class="chip" data-r="aa" data-roles="aa">보고서 4장 · 모델</span>
+            <span class="chip" data-r="ab" data-roles="ab">모델 B 실험 · 튜닝</span>
+            <span class="chip" data-r="aa" data-roles="aa">데이터 명세서 · 파생변수</span>
+            <span class="chip" data-r="all" data-roles="aa ab">실험 기록 표</span>
+          </div>
+          <p class="ms">★ 7일차 끝: 최종 모델</p>
+        </div>
+        <div class="stage s5" style="grid-column: span 2">
+          <h3>⑤ 마무리</h3>
+          <p class="out">보고서 · 발표 PPT · 리허설 (시연 없이 PPT에 모두 담아요)</p>
+          <div class="docs">
+            <span class="chip" data-r="da" data-roles="da">최종 보고서</span>
+            <span class="chip" data-r="db" data-roles="db">발표 PPT</span>
+            <span class="chip" data-r="ab" data-roles="ab">보고서 4장 · 해석</span>
+            <span class="chip" data-r="fe" data-roles="pm fe be">웹사이트 화면 캡처 → PPT</span>
+          </div>
+          <p class="ms">★ 9일차: 발표</p>
+        </div>
+
+        <div class="track" data-roles="fe be">
+          <b>🛠️ 구현 트랙 · FE · BE</b>
+          <span class="step">머신러닝 결과 웹사이트 (데이터 살펴보기 · 모델 비교 · 예측해 보기)를 가짜 결과로 먼저</span>
+          <span class="step">4일차 끝 베이스라인 결과로 바꿔 보기</span>
+          <span class="step">7일차 끝 최종 모델 결과로 교체</span>
+          <span class="step">화면 캡처해서 PPT로</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 문서 -->
+  <section aria-labelledby="h-docs">
+    <h2 id="h-docs">📄 문서 6장 · 무엇을 적고 누가 맡나 <small>계획은 계획 문서에, 결과는 처음부터 최종 보고서에 · 고치면 맨 아래 변경 이력에 v0.2처럼 한 줄</small></h2>
+    <div class="docs-grid">
+      <article class="doc" data-r="pm" data-roles="pm">
+        <div class="doc-top"><h3>프로젝트 수행 계획</h3><span class="when">1일차</span></div>
+        <p class="one">우리가 <b>무엇을 · 누가 · 언제</b> 하나</p>
+        <div class="who"><span class="chip" data-r="pm">PM</span></div>
+        <ul>
+          <li>주제 · 예측 대상 한 문장</li>
+          <li>역할 · 일정 · 협업 규칙</li>
+          <li>결과물: 결과 웹사이트 + 보고서 + PPT</li>
+        </ul>
+        <p class="to">→ 보고서 1장 배경 · 목표</p>
+      </article>
+
+      <article class="doc" data-r="da" data-roles="da aa db">
+        <div class="doc-top"><h3>데이터 명세서</h3><span class="when">3~4일차</span></div>
+        <p class="one">데이터 <b>사전 + 정리 과정 + 버전</b></p>
+        <div class="who"><span class="chip" data-r="da">데이터 A</span><em>파생변수</em><span class="chip" data-r="aa">AI A</span><em>버전</em><span class="chip" data-r="db">데이터 B</span></div>
+        <ul>
+          <li>변수마다 뜻 · 범위 · 빈 값 · 처리 방법</li>
+          <li>불러오기 → 정리 → v1 저장 → 나누기</li>
+          <li>데이터셋 버전 v1, v2 · 바뀐 점</li>
+          <li>새로 만든 변수 · 정답을 미리 알려 주는 변수 빼기</li>
+        </ul>
+        <p class="to">→ 보고서 2장 데이터</p>
+      </article>
+
+      <article class="doc" data-r="db" data-roles="db pm">
+        <div class="doc-top"><h3>분석계획서</h3><span class="when">1~2일차</span></div>
+        <p class="one"><b>무엇을 예측하고, 어떤 잣대로 재고, 무엇을 볼지</b></p>
+        <div class="who"><span class="chip" data-r="db">데이터 B</span><em>검증 기준</em><span class="chip" data-r="pm">PM</span></div>
+        <ul>
+          <li>문제 정의: 타깃 · 분류인지 회귀인지</li>
+          <li>검증 기준: 점수 종류 · 나누는 법 · 시드 (PM)</li>
+          <li>EDA에서 볼 질문과 그래프</li>
+          <li>모델링에 넘길 힌트</li>
+        </ul>
+        <p class="to">→ 보고서 3장 분석 · 결과 그래프는 보고서에 바로</p>
+      </article>
+
+      <article class="doc" data-r="aa" data-roles="aa ab">
+        <div class="doc-top"><h3>모델링 계획서</h3><span class="when">2~3일차</span></div>
+        <p class="one"><b>어떤 모델을, 어떤 순서로, 무엇을 기준으로 고르나</b></p>
+        <div class="who"><span class="chip" data-r="aa">AI A</span><span class="chip" data-r="ab">AI B</span></div>
+        <ul>
+          <li>모델 후보: 베이스라인 · LightGBM · XGBoost · CatBoost</li>
+          <li>실험 순서 (베이스라인 → 비교 → 파생변수 → 튜닝)</li>
+          <li>피처 아이디어 · 최종 모델 고르는 기준</li>
+          <li>모델 파일 넘기는 방법 (→ 웹사이트)</li>
+        </ul>
+        <p class="to">→ 보고서 4장 모델 · 결과 · 실험 한 건씩은 실험 기록 표에</p>
+      </article>
+
+      <article class="doc" data-r="fe" data-roles="fe be pm">
+        <div class="doc-top"><h3>웹사이트 명세</h3><span class="when">2일차</span></div>
+        <p class="one">머신러닝 결과 웹사이트의 <b>기능 · 화면 · API</b> 한 장</p>
+        <div class="who"><span class="chip" data-r="fe">FE</span><span class="chip" data-r="be">BE</span><em>기능 목록</em><span class="chip" data-r="pm">PM</span></div>
+        <ul>
+          <li>화면: 소개 · 데이터 살펴보기 · 모델 비교 · 중요 변수 · 예측해 보기</li>
+          <li>API: <span class="mono">/models</span> · <span class="mono">/predict</span></li>
+          <li>기술 스택 · 구조 그림 · 모델 교체 기록</li>
+          <li>PPT에 넣을 화면 캡처 목록</li>
+        </ul>
+        <p class="to">→ 보고서 5장 웹사이트</p>
+      </article>
+
+      <article class="doc" data-r="ab" data-roles="pm fe be da db aa ab">
+        <div class="doc-top"><h3>최종 보고서</h3><span class="when">3일차부터</span></div>
+        <p class="one">결과는 <b>처음부터 여기에</b>, 장마다 담당이 직접</p>
+        <div class="who"><span class="chip" data-r="all">전원</span><em>다듬기</em><span class="chip" data-r="da">데이터 A</span></div>
+        <ul>
+          <li>1장 배경 (PM) · 2장 데이터 (데이터 A)</li>
+          <li>3장 분석 (데이터 B) · 4장 모델 (AI A · B)</li>
+          <li>5장 웹사이트 (FE · BE) · 6장 결론 (PM)</li>
+        </ul>
+        <p class="to">→ 8~9일차에 다듬고, 데이터 B가 이걸로 발표 PPT를 만들어요</p>
+      </article>
+
+      <article class="doc" data-r="all" data-roles="pm fe be da db aa ab">
+        <div class="doc-top"><h3>모두가 보는 표</h3><span class="when">매일</span></div>
+        <p class="one">문서가 아니라 <b>매일 쓰는 표</b></p>
+        <div class="who"><span class="chip" data-r="all">전원</span></div>
+        <ul>
+          <li><b>칸반 보드</b> — 아침 스크럼에서 같이 봐요</li>
+          <li><b>실험 기록</b> — 실험 한 건 = 한 줄 (AI A · B)</li>
+          <li><b>일일진행일지</b> — 1~9일차, 내 역할 줄만</li>
+        </ul>
+        <p class="to">→ 모두 노션 「프로젝트 홈」에 있어요</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3. 역할 · 협업 -->
+  <div class="two">
+    <section aria-labelledby="h-roles">
+      <h2 id="h-roles">👥 역할 7개 <small>역할마다 맡는 문서와 후반에 하는 일 · 역할은 1일차에 정해요</small></h2>
+      <div class="panel">
+        <table class="roles">
+          <thead><tr><th>역할</th><th>맡는 문서</th><th>후반 (8~9일차)</th></tr></thead>
+          <tbody>
+            <tr data-roles="pm"><td><span class="chip" data-r="pm">PM</span></td><td>수행 계획 · 분석계획서 검증 기준 · 보고서 1 · 6장</td><td>최종 점검 · 발표 총괄</td></tr>
+            <tr data-roles="fe"><td><span class="chip" data-r="fe">FE</span></td><td>웹사이트 명세 (화면) · 보고서 5장</td><td>PPT에 넣을 웹사이트 화면 캡처</td></tr>
+            <tr data-roles="be"><td><span class="chip" data-r="be">BE</span></td><td>웹사이트 명세 (API)</td><td>최종 모델 연결 · 예측값 확인</td></tr>
+            <tr data-roles="da"><td><span class="chip" data-r="da">데이터 A</span></td><td>데이터 명세서 · 보고서 2장</td><td>최종 보고서 다듬기</td></tr>
+            <tr data-roles="db"><td><span class="chip" data-r="db">데이터 B</span></td><td>분석계획서 · 보고서 3장</td><td>발표 PPT</td></tr>
+            <tr data-roles="aa"><td><span class="chip" data-r="aa">AI A</span></td><td>모델링 계획서 · 실험 기록 · 보고서 4장</td><td>최종 모델 파일 저장</td></tr>
+            <tr data-roles="ab"><td><span class="chip" data-r="ab">AI B</span></td><td>모델링 계획서 (모델 B) · 보고서 4장 해석</td><td>모델 설명 원고</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-collab">
+      <h2 id="h-collab">🤝 같이 일하는 방식 <small>매일 같은 순서예요</small></h2>
+      <div class="panel">
+        <ol class="flow">
+          <li><span class="n">1</span><b>노션</b><small>오늘 할 일 · 기준 문서 확인</small></li>
+          <li><span class="n">2</span><b>칸반 스크럼</b><small>아침 15분 · 어제 · 오늘 · 막힌 점</small></li>
+          <li><span class="n">3</span><b>슬랙 [작업 시작]</b><small>시작 전에 알리기</small></li>
+          <li><span class="n">4</span><b>GitHub</b><small>브랜치 → PR → Squash and merge</small></li>
+          <li><span class="n">5</span><b>슬랙 [작업 정리]</b><small>카드 Done · 일지 내 줄 채우기</small></li>
+        </ol>
+        <p class="loop">↻ 다음 작업이나 다음 날에는 ②부터 다시</p>
+
+        <div class="rules">
+          <div data-r="da"><b>📋 칸반</b>In Progress는 한 사람당 2장까지 · 카드에 진행 · 문제 · 다음 · 결과물</div>
+          <div data-r="pm"><b>📝 문서</b>계획은 계획 문서, 결과는 보고서에 · 고치면 변경 이력에 한 줄</div>
+          <div data-r="be"><b>🐙 GitHub</b>데이터 · 모델 파일 · 비밀번호는 올리지 않아요 · main에 바로 올리지 않아요</div>
+          <div data-r="aa"><b>🏆 점수</b>같은 검증 기준 · 같은 데이터셋 버전끼리만 비교해요</div>
+        </div>
+
+        <div class="tpl">
+          <figure>
+            <figcaption>💬 슬랙 · 시작할 때 <button type="button" id="copy-start" data-copy="t-start">복사</button></figcaption>
+            <pre id="t-start">[작업 시작] 무엇을 하는지 한 줄
+할 일: 1. ... 2. ...
+부탁: @이름 — 무엇을 언제까지</pre>
+          </figure>
+          <figure>
+            <figcaption>💬 슬랙 · 끝났을 때 <button type="button" id="copy-done" data-copy="t-done">복사</button></figcaption>
+            <pre id="t-done">[작업 정리] 무엇이 끝났는지 한 줄
+만든 것 / 확인 부탁 / 다음 / 링크</pre>
+          </figure>
+        </div>
+
+        <div class="tools">
+          <span><b>노션</b> 기준 문서 · 칸반 · 일지</span>
+          <span><b>슬랙</b> 알리기 · 묻기 <span class="mono">[논의 요청] @이름</span></span>
+          <span><b>GitHub</b> 코드 · 노트북 (AI · BE · FE 저장소)</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>모르는 게 생기면 슬랙에 물어보거나 데일리 스크럼의 "막힌 점"에 말해 주세요 · 노션 「팀원 안내」에 더 자세히 있어요</footer>
+</div>
+
+<script>
+(function () {
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter button'));
+  var items = Array.prototype.slice.call(document.querySelectorAll('[data-roles]'));
+  function apply(role) {
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.role === role)); });
+    var on = role !== 'all';
+    document.body.classList.toggle('filtering', on);
+    items.forEach(function (el) {
+      el.classList.toggle('hit', on && el.dataset.roles.split(' ').indexOf(role) !== -1);
+    });
+    try { localStorage.setItem('nunchi-role', role); } catch (e) {}
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.role); }); });
+  try {
+    var saved = localStorage.getItem('nunchi-role');
+    if (saved && document.querySelector('.filter button[data-role="' + saved + '"]')) apply(saved);
+  } catch (e) {}
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pre = document.getElementById(btn.dataset.copy);
+      function selectIt() {
+        var r = document.createRange(); r.selectNodeContents(pre);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = '선택됨 · Ctrl+C';
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(pre.textContent).then(function () { btn.textContent = '복사됨'; }, selectIt);
+      } else { selectIt(); }
+      setTimeout(function () { btn.textContent = '복사'; }, 1800);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
