@@ -13,21 +13,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* 레이아웃: 하늘→민트 머리 띠 · 역할 필터 → 9일 일정(단계마다 쓰는 문서) → 문서 8장 카드 → 역할표 · 협업 방식 2단 */
+/* 레이아웃: 민트 머리 띠 · 역할 필터 → 9일 일정(단계마다 쓰는 문서) → 문서 8장 카드 → 역할표 · 협업 방식 2단 */
 :root {
-  --bg: #F3F8FF;
+  --bg: #F6F7F5;
   --surface: #FFFFFF;
-  --soft: #F6F9FE;
-  --line: #E2EAF5;
-  --ink: #1B2440;
-  --sub: #5F6C88;
-  --sky: #2F80ED;
-  --mint: #10B9A6;
-  --hero-a: #3B8BF5;
-  --hero-b: #19C3AE;
-  --hero-ink: #FFFFFF;
+  --soft: #F1F3F0;
+  --line: #E3E7E2;
+  --ink: #191919;
+  --sub: #5A615C;
+  --sky: #0B7A5C;
+  --mint: #12B886;
+  --hero-a: #63E6BE;
+  --hero-b: #63E6BE;
+  --hero-ink: #191919;
   --star: #E8590C;
-  --shadow: 0 1px 2px rgba(31, 64, 120, .06), 0 6px 18px rgba(31, 64, 120, .06);
+  --shadow: 0 1px 2px rgba(25, 25, 25, .05), 0 4px 14px rgba(25, 25, 25, .05);
   --pm: #6C5CE7;  --pm-bg: #EFEDFF;
   --fe: #E8457A;  --fe-bg: #FFE9F0;
   --be: #F0613F;  --be-bg: #FFECE6;
@@ -41,8 +41,8 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0D1526; --surface: #142038; --soft: #18253F; --line: #26355A; --ink: #E8EEFA; --sub: #A0AECB;
-    --sky: #6AA8FF; --mint: #3EDDC8; --hero-a: #2463C9; --hero-b: #0F9A8A; --hero-ink: #FFFFFF; --star: #FFA65C;
+    --bg: #141615; --surface: #1C1F1D; --soft: #232724; --line: #303632; --ink: #ECEFEC; --sub: #A6AEA9;
+    --sky: #63E6BE; --mint: #63E6BE; --hero-a: #63E6BE; --hero-b: #63E6BE; --hero-ink: #191919; --star: #FFA65C;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
     --pm: #A99CFF; --pm-bg: #29234F; --fe: #FF86AE; --fe-bg: #43203A; --be: #FF8F73; --be-bg: #45231C;
     --da: #6AA8FF; --da-bg: #182C52; --db: #FFCE4D; --db-bg: #3A2F10; --aa: #4FE0B4; --aa-bg: #133A31;
@@ -51,8 +51,8 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0D1526; --surface: #142038; --soft: #18253F; --line: #26355A; --ink: #E8EEFA; --sub: #A0AECB;
-  --sky: #6AA8FF; --mint: #3EDDC8; --hero-a: #2463C9; --hero-b: #0F9A8A; --hero-ink: #FFFFFF; --star: #FFA65C;
+  --bg: #141615; --surface: #1C1F1D; --soft: #232724; --line: #303632; --ink: #ECEFEC; --sub: #A6AEA9;
+  --sky: #63E6BE; --mint: #63E6BE; --hero-a: #63E6BE; --hero-b: #63E6BE; --hero-ink: #191919; --star: #FFA65C;
   --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 18px rgba(0, 0, 0, .25);
   --pm: #A99CFF; --pm-bg: #29234F; --fe: #FF86AE; --fe-bg: #43203A; --be: #FF8F73; --be-bg: #45231C;
   --da: #6AA8FF; --da-bg: #182C52; --db: #FFCE4D; --db-bg: #3A2F10; --aa: #4FE0B4; --aa-bg: #133A31;
@@ -77,25 +77,26 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--mint); outline-
 
 /* 머리 띠 */
 header {
-  background: linear-gradient(115deg, var(--hero-a), var(--hero-b));
+  background: var(--hero-a);
   color: var(--hero-ink); border-radius: 22px; padding: 26px 28px;
   display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: center; justify-content: space-between;
   box-shadow: var(--shadow); position: relative; overflow: hidden;
 }
 header::after {
+  display: none;
   content: ""; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%;
   background: rgba(255, 255, 255, .12); pointer-events: none;
 }
 .brand { display: flex; gap: 16px; align-items: center; min-width: 0; position: relative; z-index: 1; }
-.brand svg { flex: none; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .15)); }
+.brand svg { flex: none; }
 .brand h1 { font-size: clamp(22px, 3vw, 31px); font-weight: 700; letter-spacing: -.01em; }
-.brand p { color: rgba(255, 255, 255, .88); font-size: 14px; }
+.brand p { color: var(--hero-ink); opacity: .78; font-size: 14px; }
 .links { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
 .links a {
   text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 15px; border-radius: 999px;
-  background: rgba(255, 255, 255, .2); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, .35);
+  background: #FFFFFF; color: #191919; border: 1px solid #FFFFFF;
 }
-.links a:hover { background: rgba(255, 255, 255, .32); }
+.links a:hover { background: transparent; border-color: #191919; }
 
 /* 역할 필터 */
 .filter { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -175,7 +176,7 @@ section > h2 small { font-size: 13px; font-weight: 500; color: var(--sub); }
 
 .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 0 0 8px; }
 .flow li { list-style: none; background: var(--soft); border-radius: 14px; padding: 10px; display: grid; gap: 3px; }
-.flow .n { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); color: #FFFFFF; display: grid; place-items: center; font-size: 13px; font-weight: 700; }
+.flow .n { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--surface); display: grid; place-items: center; font-size: 13px; font-weight: 700; }
 .flow b { font-size: 14px; }
 .flow small { font-size: 12px; color: var(--sub); }
 .loop { font-size: 12.5px; color: var(--sub); margin-bottom: 14px; }
