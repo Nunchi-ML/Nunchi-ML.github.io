@@ -7,7 +7,7 @@
 <style>html,body{margin:0}</style>
 </head>
 <body>
-<title>Nunchi-ML 프로젝트 지도</title>
+<title>눈치 프로젝트 지도</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -219,8 +219,8 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
         <rect x="35.1" y="26.5" width="3.4" height="10.5" rx="1" fill="#FFFFFF"/>
       </svg>
       <div>
-        <h1>Nunchi-ML 프로젝트 지도</h1>
-        <p>10/29(목) ~ 11/10(화) · 평일 9일 · 5명 · 누가 언제 어떤 문서를 쓰고, 어떻게 같이 일하는지 한 장으로</p>
+        <h1>눈치 · 프로젝트 지도</h1>
+        <p>10/29(목) ~ 11/10(화) · 평일 9일 · 4명 · 역할 6개 · 누가 언제 어떤 문서를 쓰고, 어떻게 같이 일하는지 한 장으로</p>
       </div>
     </div>
     <nav class="links" aria-label="바로가기">
@@ -238,8 +238,7 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
     <button type="button" id="f-be" data-role="be" data-r="be" aria-pressed="false">BE</button>
     <button type="button" id="f-da" data-role="da" data-r="da" aria-pressed="false">데이터 A</button>
     <button type="button" id="f-db" data-role="db" data-r="db" aria-pressed="false">데이터 B</button>
-    <button type="button" id="f-aa" data-role="aa" data-r="aa" aria-pressed="false">AI A</button>
-    <button type="button" id="f-ab" data-role="ab" data-r="ab" aria-pressed="false">AI B</button>
+    <button type="button" id="f-aa" data-role="aa" data-r="aa" aria-pressed="false">AI</button>
   </div>
 
   <!-- 1. 9일 일정 -->
@@ -262,7 +261,7 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
           <p class="out">무엇을 예측할지 한 문장 · 역할 확정</p>
           <div class="docs">
             <span class="chip" data-r="pm" data-roles="pm">수행 계획</span>
-            <span class="chip" data-r="all" data-roles="pm fe be da db aa ab">역할 정하기 (전원)</span>
+            <span class="chip" data-r="all" data-roles="pm fe be da db aa">역할 정하기 (전원)</span>
           </div>
         </div>
         <div class="stage s2">
@@ -271,7 +270,7 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
           <div class="docs">
             <span class="chip" data-r="db" data-roles="db">분석계획서</span>
             <span class="chip" data-r="pm" data-roles="pm">분석계획서 · 검증 기준</span>
-            <span class="chip" data-r="aa" data-roles="aa ab">모델링 계획서</span>
+            <span class="chip" data-r="aa" data-roles="aa">모델링 계획서</span>
             <span class="chip" data-r="fe" data-roles="fe be">웹사이트 명세</span>
           </div>
         </div>
@@ -288,12 +287,13 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
         </div>
         <div class="stage s4" style="grid-column: span 3">
           <h3>④ 모델 만들기</h3>
-          <p class="out">여러 모델을 같은 기준으로 비교 → 가장 좋은 모델을 파일로 저장</p>
+          <p class="out">여러 모델을 같은 기준으로 비교 → 가장 좋은 모델을 파일로 저장 · 5일차부터 데이터 A · B 합류</p>
           <div class="docs">
             <span class="chip" data-r="aa" data-roles="aa">보고서 4장 · 모델</span>
-            <span class="chip" data-r="ab" data-roles="ab">모델 B 실험 · 튜닝</span>
-            <span class="chip" data-r="aa" data-roles="aa">데이터 명세서 · 파생변수</span>
-            <span class="chip" data-r="all" data-roles="aa ab">실험 기록 표</span>
+            <span class="chip" data-r="aa" data-roles="aa">모델 비교 · 튜닝</span>
+            <span class="chip" data-r="da" data-roles="da">합류 · 파생변수</span>
+            <span class="chip" data-r="db" data-roles="db">합류 · 중요 변수 해석</span>
+            <span class="chip" data-r="all" data-roles="aa da db">실험 기록 표</span>
           </div>
           <p class="ms">★ 7일차 끝: 최종 모델</p>
         </div>
@@ -303,7 +303,7 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
           <div class="docs">
             <span class="chip" data-r="da" data-roles="da">최종 보고서</span>
             <span class="chip" data-r="db" data-roles="db">발표 PPT</span>
-            <span class="chip" data-r="ab" data-roles="ab">보고서 4장 · 해석</span>
+            <span class="chip" data-r="db" data-roles="db">보고서 4장 · 해석</span>
             <span class="chip" data-r="fe" data-roles="pm fe be">웹사이트 화면 캡처 → PPT</span>
           </div>
           <p class="ms">★ 9일차: 발표</p>
@@ -336,10 +336,10 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
         <p class="to">→ 보고서 1장 배경 · 목표</p>
       </article>
 
-      <article class="doc" data-r="da" data-roles="da aa db">
+      <article class="doc" data-r="da" data-roles="da db">
         <div class="doc-top"><h3>데이터 명세서</h3><span class="when">3~4일차</span></div>
         <p class="one">데이터 <b>사전 + 정리 과정 + 버전</b></p>
-        <div class="who"><span class="chip" data-r="da">데이터 A</span><em>파생변수</em><span class="chip" data-r="aa">AI A</span><em>버전</em><span class="chip" data-r="db">데이터 B</span></div>
+        <div class="who"><span class="chip" data-r="da">데이터 A</span><em>버전</em><span class="chip" data-r="db">데이터 B</span></div>
         <ul>
           <li>변수마다 뜻 · 범위 · 빈 값 · 처리 방법</li>
           <li>불러오기 → 정리 → v1 저장 → 나누기</li>
@@ -362,10 +362,10 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
         <p class="to">→ 보고서 3장 분석 · 결과 그래프는 보고서에 바로</p>
       </article>
 
-      <article class="doc" data-r="aa" data-roles="aa ab">
-        <div class="doc-top"><h3>모델링 계획서</h3><span class="when">2~3일차</span></div>
+      <article class="doc" data-r="aa" data-roles="aa da db">
+        <div class="doc-top"><h3>모델링 계획서</h3><span class="when">1~3일차</span></div>
         <p class="one"><b>어떤 모델을, 어떤 순서로, 무엇을 기준으로 고르나</b></p>
-        <div class="who"><span class="chip" data-r="aa">AI A</span><span class="chip" data-r="ab">AI B</span></div>
+        <div class="who"><span class="chip" data-r="aa">AI</span><em>5일차부터 함께</em><span class="chip" data-r="da">데이터 A</span><span class="chip" data-r="db">데이터 B</span></div>
         <ul>
           <li>모델 후보: 베이스라인 · LightGBM · XGBoost · CatBoost</li>
           <li>실험 순서 (베이스라인 → 비교 → 파생변수 → 튜닝)</li>
@@ -388,25 +388,25 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
         <p class="to">→ 보고서 5장 웹사이트</p>
       </article>
 
-      <article class="doc" data-r="ab" data-roles="pm fe be da db aa ab">
+      <article class="doc" data-r="aa" data-roles="pm fe be da db aa">
         <div class="doc-top"><h3>최종 보고서</h3><span class="when">3일차부터</span></div>
         <p class="one">결과는 <b>처음부터 여기에</b>, 장마다 담당이 직접</p>
         <div class="who"><span class="chip" data-r="all">전원</span><em>다듬기</em><span class="chip" data-r="da">데이터 A</span></div>
         <ul>
           <li>1장 배경 (PM) · 2장 데이터 (데이터 A)</li>
-          <li>3장 분석 (데이터 B) · 4장 모델 (AI A · B)</li>
+          <li>3장 분석 (데이터 B) · 4장 모델 (AI · 해석은 데이터 B)</li>
           <li>5장 웹사이트 (FE · BE) · 6장 결론 (PM)</li>
         </ul>
         <p class="to">→ 8~9일차에 다듬고, 데이터 B가 이걸로 발표 PPT를 만들어요</p>
       </article>
 
-      <article class="doc" data-r="all" data-roles="pm fe be da db aa ab">
+      <article class="doc" data-r="all" data-roles="pm fe be da db aa">
         <div class="doc-top"><h3>모두가 보는 표</h3><span class="when">매일</span></div>
         <p class="one">문서가 아니라 <b>매일 쓰는 표</b></p>
         <div class="who"><span class="chip" data-r="all">전원</span></div>
         <ul>
           <li><b>칸반 보드</b> — 아침 스크럼에서 같이 봐요</li>
-          <li><b>실험 기록</b> — 실험 한 건 = 한 줄 (AI A · B)</li>
+          <li><b>실험 기록</b> — 실험 한 건 = 한 줄 (AI · 합류 인원)</li>
           <li><b>일일진행일지</b> — 1~9일차, 내 역할 줄만</li>
         </ul>
         <p class="to">→ 모두 노션 「프로젝트 홈」에 있어요</p>
@@ -417,7 +417,7 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
   <!-- 3. 역할 · 협업 -->
   <div class="two">
     <section aria-labelledby="h-roles">
-      <h2 id="h-roles">👥 역할 7개 <small>역할마다 맡는 문서와 후반에 하는 일 · 역할은 1일차에 정해요</small></h2>
+      <h2 id="h-roles">👥 역할 6개 · 4명 <small>PM · FE · BE는 한 사람 · 역할은 시작점, 5일차부터 데이터 A · B가 AI 작업에 합류</small></h2>
       <div class="panel">
         <table class="roles">
           <thead><tr><th>역할</th><th>맡는 문서</th><th>후반 (8~9일차)</th></tr></thead>
@@ -425,10 +425,9 @@ body.filtering [data-roles]:not(.hit) { opacity: .22; filter: grayscale(.6); }
             <tr data-roles="pm"><td><span class="chip" data-r="pm">PM</span></td><td>수행 계획 · 분석계획서 검증 기준 · 보고서 1 · 6장</td><td>최종 점검 · 발표 총괄</td></tr>
             <tr data-roles="fe"><td><span class="chip" data-r="fe">FE</span></td><td>웹사이트 명세 (화면) · 보고서 5장</td><td>PPT에 넣을 웹사이트 화면 캡처</td></tr>
             <tr data-roles="be"><td><span class="chip" data-r="be">BE</span></td><td>웹사이트 명세 (API)</td><td>최종 모델 연결 · 예측값 확인</td></tr>
-            <tr data-roles="da"><td><span class="chip" data-r="da">데이터 A</span></td><td>데이터 명세서 · 보고서 2장</td><td>최종 보고서 다듬기</td></tr>
-            <tr data-roles="db"><td><span class="chip" data-r="db">데이터 B</span></td><td>분석계획서 · 보고서 3장</td><td>발표 PPT</td></tr>
-            <tr data-roles="aa"><td><span class="chip" data-r="aa">AI A</span></td><td>모델링 계획서 · 실험 기록 · 보고서 4장</td><td>최종 모델 파일 저장</td></tr>
-            <tr data-roles="ab"><td><span class="chip" data-r="ab">AI B</span></td><td>모델링 계획서 (모델 B) · 보고서 4장 해석</td><td>모델 설명 원고</td></tr>
+            <tr data-roles="da"><td><span class="chip" data-r="da">데이터 A</span></td><td>데이터 명세서 · 보고서 2장 · 5일차~ 파생변수</td><td>최종 보고서 다듬기</td></tr>
+            <tr data-roles="db"><td><span class="chip" data-r="db">데이터 B</span></td><td>분석계획서 · 보고서 3장 · 5일차~ 모델 해석</td><td>발표 PPT</td></tr>
+            <tr data-roles="aa"><td><span class="chip" data-r="aa">AI</span></td><td>모델링 계획서 · 실험 기록 · 보고서 4장</td><td>최종 모델 파일 저장</td></tr>
           </tbody>
         </table>
       </div>
